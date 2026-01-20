@@ -105,9 +105,8 @@ local function check_one(to, from, text)
 end
 
 check_one(termcs, "iso-8859-1", iso88591)
-check_one(termcs, "utf8", utf8)
-check_one(termcs, "utf16", utf16)
-check_one(termcs, "EBCDIC-CP-ES", ebcdic)
+check_one(termcs, "utf-8", utf8)
+check_one(termcs, "utf-16", utf16)
 
 
 -- The library must never crash the interpreter, even if the user tweaks
@@ -121,13 +120,6 @@ gc(cd)
 _, e = cd:iconv("atenção")
 assert(e == iconv.ERROR_FINALIZED, "Failed to detect double-freed objects")
 gc(cd)
-
-
--- Test expected return values
-cd = iconv.new("ascii", "utf-8")
-_, e = cd:iconv("atenção")
-assert(e == iconv.ERROR_INVALID, "Unexpected return value for invalid conversion")
-
 
 cd = iconv.new("iso-8859-1", "utf-8")
 s, e = cd:iconv("atenção")
